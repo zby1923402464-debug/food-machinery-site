@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0B0D0F">
+<meta name="description" content="鼎盛机械 — 食品加工设备制造商，提供切制、搅拌腌制、成型、包装、杀菌与 CIP 清洗设备，支持整线交钥匙与非标定制。">
+<title>鼎盛机械 · 食品加工设备与整线方案</title>
+
+<!--
+  ============================================================
+  食品机械 · 企业落地页（单文件，无外部依赖）
+  换成你的公司，只需改这几处：
+    1) 全局替换 "鼎盛机械" → 你的公司名（约 10 处）
+    2) Hero 的 <h1> 主标语、p.lead 副标语
+    3) #models 六张设备卡：型号、名称、参数
+    4) #contact 里的地址 / 电话 / 邮箱
+    5) 页脚备案号等信息
+  换配色：改 :root 的 --brand / --brand-2
+  询价表单目前只做前端演示，接入后端见页面底部注释
+  ============================================================
+-->
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23F0A03C'/%3E%3Cpath d='M9 11h14M9 16h9M9 21h12' stroke='%230B0D0F' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<style>
+/* ---------- 设计变量 ---------- */
+:root{
+  --bg:#0B0D0F;
+  --bg-soft:#0F1215;
+  --card:#141A1F;
+  --line:rgba(255,255,255,.09);
+  --line-strong:rgba(255,255,255,.17);
+  --text:#ECEFF3;
+  --muted:#98A3B0;
+  --brand:#F0A03C;
+  --brand-2:#E8654A;
+  --ok:#69CF95;
+  --radius:14px;
+  --max:1140px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC","Hiragino Sans GB",Roboto,Helvetica,Arial,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--font);font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,h4{margin:0;line-height:1.2;letter-spacing:-.02em;font-weight:700}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+
+.wrap{width:min(var(--max),calc(100% - 40px));margin-inline:auto}
+.section{padding:92px 0;position:relative}
+.section-head{max-width:680px;margin:0 auto 52px;text-align:center}
+.section-head h2{font-size:clamp(1.65rem,3.3vw,2.4rem);margin-bottom:14px}
+.section-head p{color:var(--muted);font-size:1rem}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(255,255,255,.04);
+  font-size:.79rem;color:var(--muted);letter-spacing:.03em;
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px rgba(240,160,60,.15)}
+
+.grad{
+  background:linear-gradient(100deg,#F7C169 5%,var(--brand) 45%,var(--brand-2) 95%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* ---------- 按钮 ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 22px;border-radius:10px;font-size:.95rem;font-weight:600;
+  text-decoration:none;border:1px solid transparent;cursor:pointer;font-family:inherit;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease;
+  white-space:nowrap;
+}
+.btn:active{transform:translateY(1px)}
+.btn-primary{
+  background:linear-gradient(135deg,#F6B45C,var(--brand-2));
+  color:#241305;font-weight:700;
+  box-shadow:0 10px 26px -14px rgba(240,160,60,.95);
+}
+.btn-primary:hover{box-shadow:0 16px 34px -14px rgba(240,160,60,1);filter:brightness(1.05)}
+.btn-ghost{color:var(--text);background:rgba(255,255,255,.04);border-color:var(--line)}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:var(--line-strong)}
+.btn-lg{padding:14px 28px;font-size:1rem}
+
+/* ---------- 导航 ---------- */
+.nav{
+  position:sticky;top:0;z-index:60;background:rgba(11,13,15,.72);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid transparent;transition:border-color .25s,background .25s;
+}
+.nav.scrolled{border-bottom-color:var(--line);background:rgba(11,13,15,.92)}
+.nav-inner{display:flex;align-items:center;gap:26px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700}
+.brand-mark{
+  width:30px;height:30px;border-radius:9px;flex:0 0 auto;display:grid;place-items:center;
+  background:linear-gradient(135deg,#F6B45C,var(--brand-2));
+}
+.brand-mark svg{width:17px;height:17px}
+.nav-links{display:none;align-items:center;gap:24px;margin-left:6px}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:.92rem;transition:color .18s}
+.nav-links a:hover{color:var(--text)}
+.nav-actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+.nav-actions .btn{padding:9px 16px;font-size:.88rem}
+.nav-phone{
+  display:none;align-items:center;gap:7px;color:#D6DCE4;font-size:.88rem;
+  text-decoration:none;font-weight:600;
+}
+.nav-phone svg{width:15px;height:15px;color:var(--brand)}
+.burger{
+  display:grid;gap:5px;place-items:center;width:40px;height:40px;padding:0;
+  background:none;border:1px solid var(--line);border-radius:10px;cursor:pointer;
+}
+.burger span{display:block;width:17px;height:1.8px;background:var(--text);border-radius:2px;transition:transform .2s,opacity .2s}
+.nav.open .burger span:nth-child(1){transform:translateY(6.8px) rotate(45deg)}
+.nav.open .burger span:nth-child(2){opacity:0}
+.nav.open .burger span:nth-child(3){transform:translateY(-6.8px) rotate(-45deg)}
+@media (min-width:980px){
+  .nav-links{display:flex}
+  .nav-phone{display:inline-flex}
+  .burger{display:none}
+}
+.nav.open .nav-links{
+  display:flex;flex-direction:column;align-items:flex-start;gap:2px;
+  position:absolute;left:0;right:0;top:68px;padding:14px 20px 20px;
+  background:rgba(11,13,15,.98);border-bottom:1px solid var(--line);
+}
+.nav.open .nav-links a{padding:10px 0;width:100%;font-size:1rem;color:var(--text)}
+
+/* ---------- Hero ---------- */
+.hero{padding:78px 0 34px;text-align:center;position:relative;overflow:hidden}
+.hero::before,.hero::after{content:"";position:absolute;pointer-events:none;z-index:0}
+.hero::before{
+  width:780px;height:780px;left:50%;top:-400px;transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(240,160,60,.20),transparent 62%);
+}
+.hero::after{
+  width:600px;height:600px;right:-200px;top:40px;
+  background:radial-gradient(circle,rgba(232,101,74,.13),transparent 66%);
+}
+.hero .wrap{position:relative;z-index:1}
+.hero h1{font-size:clamp(2.1rem,5.6vw,3.85rem);line-height:1.1;letter-spacing:-.035em;margin:22px auto 0;max-width:16ch}
+.hero .lead{color:var(--muted);font-size:clamp(1rem,1.9vw,1.12rem);max-width:640px;margin:22px auto 0}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:32px}
+.trust{margin-top:20px;font-size:.83rem;color:#7C8795}
+
+/* 产线看板（纯 CSS 绘制） */
+.mockup{
+  margin-top:58px;border-radius:16px;overflow:hidden;text-align:left;
+  border:1px solid var(--line);background:linear-gradient(180deg,#151C22,#0C1013);
+  box-shadow:0 50px 100px -45px rgba(0,0,0,.95),0 0 0 1px rgba(255,255,255,.02) inset;
+}
+.mockup-bar{
+  display:flex;align-items:center;gap:7px;height:38px;padding:0 14px;
+  border-bottom:1px solid var(--line);background:rgba(255,255,255,.025);
+}
+.mockup-bar i{width:10px;height:10px;border-radius:50%}
+.mockup-bar i:nth-child(1){background:#3A424D}
+.mockup-bar i:nth-child(2){background:#3A424D}
+.mockup-bar i:nth-child(3){background:#3A424D}
+.mockup-url{
+  margin-left:10px;flex:1;height:20px;border-radius:6px;background:rgba(255,255,255,.05);
+  display:flex;align-items:center;padding:0 10px;font-size:.68rem;color:#6E7A88;letter-spacing:.02em;
+}
+.mockup-body{display:grid;grid-template-columns:206px 1fr;min-height:330px}
+.mock-side{border-right:1px solid var(--line);padding:18px 14px;background:rgba(255,255,255,.012)}
+.mock-side .s-title{font-size:.65rem;letter-spacing:.14em;color:#5C6674;margin-bottom:12px}
+.mock-side .s-item{display:flex;align-items:center;gap:8px;padding:8px 9px;border-radius:8px;font-size:.78rem;color:#8A95A3;margin-bottom:3px}
+.mock-side .s-item.on{background:rgba(240,160,60,.14);color:#F2C88A}
+.mock-side .s-item b{width:7px;height:7px;border-radius:2px;background:currentColor;opacity:.6;flex:0 0 auto}
+.mock-main{padding:20px 22px}
+.mock-main .m-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.mock-main .m-title{font-size:.92rem;font-weight:600;color:#DFE4EA}
+.mock-main .m-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.64rem;padding:4px 9px;border-radius:999px;
+  background:rgba(105,207,149,.13);color:#7FDCA8;
+}
+.mock-main .m-pill::before{content:"";width:5px;height:5px;border-radius:50%;background:#69CF95}
+.mock-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.mock-card{border:1px solid var(--line);border-radius:10px;padding:12px;background:rgba(255,255,255,.022)}
+.mock-card .k{font-size:.62rem;color:#6B7685;letter-spacing:.06em;margin-bottom:7px}
+.mock-card .v{font-size:1.05rem;font-weight:700;color:#E4E9EF}
+.mock-card .v small{font-size:.66rem;font-weight:500;color:#6FCF95;margin-left:5px}
+.mock-lines{display:grid;gap:9px}
+.mock-line{height:9px;border-radius:5px;background:linear-gradient(90deg,rgba(255,255,255,.09),rgba(255,255,255,.03))}
+.mock-line:nth-child(1){width:92%}
+.mock-line:nth-child(2){width:78%}
+.mock-line:nth-child(3){width:85%}
+.mock-line:nth-child(4){width:56%}
+.mock-line.hl{width:64%;background:linear-gradient(90deg,rgba(240,160,60,.6),rgba(232,101,74,.28))}
+@media (max-width:700px){
+  .mockup-body{grid-template-columns:1fr}
+  .mock-side{display:none}
+  .mock-grid{grid-template-columns:1fr 1fr}
+  .mock-card:last-child{grid-column:1 / -1}
+  .mockup{margin-top:40px}
+}
+
+/* ---------- 数据条 ---------- */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+}
+.stat{background:var(--bg);padding:26px 18px;text-align:center}
+.stat b{display:block;font-size:clamp(1.5rem,3vw,1.95rem);letter-spacing:-.03em;color:#F5C787}
+.stat span{display:block;font-size:.8rem;color:var(--muted);margin-top:4px}
+@media (max-width:700px){.stats{grid-template-columns:1fr 1fr}}
+
+/* ---------- 设备卡 ---------- */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.feature-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.feature-grid{grid-template-columns:1fr}}
+.card{
+  border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
+  transition:transform .25s,border-color .25s,background .25s;
+}
+.card:hover{transform:translateY(-3px);border-color:var(--line-strong);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.012))}
+.icon-box{
+  width:40px;height:40px;border-radius:11px;display:grid;place-items:center;margin-bottom:16px;
+  background:rgba(240,160,60,.13);border:1px solid rgba(240,160,60,.28);color:#F0BB74;
+}
+.icon-box svg{width:20px;height:20px}
+.card h3{font-size:1.02rem;margin-bottom:8px}
+.model-tag{
+  display:inline-block;font-size:.68rem;letter-spacing:.08em;color:#F0BB74;
+  border:1px solid rgba(240,160,60,.3);background:rgba(240,160,60,.1);
+  padding:2px 8px;border-radius:6px;margin-bottom:12px;font-weight:600;
+}
+.card p{color:var(--muted);font-size:.91rem;line-height:1.62}
+.specs{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.specs span{
+  font-size:.73rem;color:#B9C2CD;padding:3px 9px;border-radius:6px;
+  background:rgba(255,255,255,.05);border:1px solid var(--line);
+}
+
+/* ---------- 行业 ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:980px;margin-inline:auto}
+.chip{
+  padding:9px 18px;border-radius:999px;font-size:.9rem;color:#C9D1DA;
+  border:1px solid var(--line);background:rgba(255,255,255,.03);
+}
+
+/* ---------- 优势 ---------- */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.why-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.why-grid{grid-template-columns:1fr}}
+.why{border-left:2px solid rgba(240,160,60,.5);padding:2px 0 2px 18px}
+.why h3{font-size:.98rem;margin-bottom:7px}
+.why p{color:var(--muted);font-size:.9rem}
+
+/* ---------- 流程 ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:820px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding:24px 22px;border:1px solid var(--line);border-radius:var(--radius);background:rgba(255,255,255,.02)}
+.step em{
+  font-style:normal;display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;
+  margin-bottom:14px;font-size:.8rem;font-weight:700;color:#F3C68C;
+  background:rgba(240,160,60,.15);border:1px solid rgba(240,160,60,.3);
+}
+.step h3{font-size:.98rem;margin-bottom:7px}
+.step p{color:var(--muted);font-size:.89rem}
+
+/* ---------- 合作方式 ---------- */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+@media (max-width:900px){.plans{grid-template-columns:1fr;max-width:480px;margin-inline:auto}}
+.plan{
+  border:1px solid var(--line);border-radius:16px;padding:28px 24px;position:relative;
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
+  display:flex;flex-direction:column;height:100%;
+}
+.plan.featured{
+  border-color:rgba(240,160,60,.5);
+  background:linear-gradient(180deg,rgba(240,160,60,.12),rgba(240,160,60,.02));
+  box-shadow:0 30px 60px -34px rgba(240,160,60,.6);
+}
+.plan .badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  padding:4px 12px;border-radius:999px;font-size:.71rem;font-weight:700;white-space:nowrap;
+  background:linear-gradient(135deg,#F6B45C,var(--brand-2));color:#241305;
+}
+.plan h3{font-size:1.05rem;margin-bottom:6px}
+.plan .desc{color:var(--muted);font-size:.86rem;min-height:44px}
+.plan .meta{font-size:.78rem;color:#6E7A88;margin:14px 0 18px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.plan ul{display:grid;gap:10px;margin-bottom:24px;font-size:.89rem;color:#C2CAD4}
+.plan ul li{display:flex;gap:9px;align-items:flex-start;line-height:1.5}
+.plan ul svg{width:15px;height:15px;flex:0 0 auto;margin-top:3px;color:var(--ok)}
+.plan .btn{margin-top:auto;width:100%}
+
+/* ---------- 案例 ---------- */
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:900px){.cases{grid-template-columns:1fr}}
+.case{
+  border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;
+  background:rgba(255,255,255,.022);display:flex;flex-direction:column;
+}
+.case .tag{font-size:.72rem;color:#F0BB74;letter-spacing:.06em;margin-bottom:10px}
+.case h3{font-size:.98rem;margin-bottom:10px}
+.case p{color:var(--muted);font-size:.89rem}
+.case-metrics{display:flex;gap:18px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+.case-metrics div b{display:block;font-size:1.15rem;color:#F5C787;letter-spacing:-.02em}
+.case-metrics div span{font-size:.72rem;color:#7C8795}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:780px;margin-inline:auto;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:19px 34px 19px 0;position:relative;font-weight:600;font-size:.97rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"";position:absolute;right:6px;top:50%;width:8px;height:8px;margin-top:-6px;
+  border-right:1.8px solid var(--muted);border-bottom:1.8px solid var(--muted);
+  transform:rotate(45deg);transition:transform .22s;
+}
+.faq details[open] summary::after{transform:rotate(-135deg);margin-top:-2px}
+.faq details p{padding:0 34px 20px 0;color:var(--muted);font-size:.91rem}
+
+/* ---------- 询价 ---------- */
+.contact-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:start}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr;gap:34px}}
+.quote-card{
+  border:1px solid var(--line);border-radius:18px;padding:30px 28px;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.01));
+}
+.quote-card h3{font-size:1.15rem;margin-bottom:6px}
+.quote-card > p{color:var(--muted);font-size:.87rem;margin-bottom:22px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.8rem;color:#A9B3BF;margin-bottom:6px}
+.field .req{color:var(--brand-2)}
+.field input,.field textarea,.field select{
+  width:100%;padding:11px 13px;border-radius:9px;font-family:inherit;font-size:.92rem;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);
+  transition:border-color .18s,background .18s;
+}
+.field input:focus,.field textarea:focus,.field select:focus{
+  outline:none;border-color:rgba(240,160,60,.6);background:rgba(255,255,255,.06);
+}
+.field textarea{resize:vertical;min-height:88px}
+.field input::placeholder,.field textarea::placeholder{color:#69737F}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.form-row{grid-template-columns:1fr}}
+.form-note{font-size:.75rem;color:#69737F;margin-top:12px;line-height:1.6}
+.form-ok{
+  display:none;margin-top:16px;padding:12px 14px;border-radius:9px;font-size:.87rem;
+  background:rgba(105,207,149,.12);border:1px solid rgba(105,207,149,.35);color:#8FE2B2;
+}
+.form-ok.show{display:block}
+
+.contact-info{padding-top:6px}
+.contact-info h3{font-size:1.05rem;margin-bottom:18px}
+.contact-item{display:flex;gap:13px;margin-bottom:20px}
+.contact-item .ci{
+  width:36px;height:36px;border-radius:10px;flex:0 0 auto;display:grid;place-items:center;
+  background:rgba(240,160,60,.12);border:1px solid rgba(240,160,60,.28);color:#F0BB74;
+}
+.contact-item .ci svg{width:17px;height:17px}
+.contact-item b{display:block;font-size:.84rem;font-weight:600;margin-bottom:2px}
+.contact-item span,.contact-item a{font-size:.88rem;color:var(--muted);text-decoration:none}
+.contact-item a:hover{color:var(--text)}
+
+/* ---------- 页脚 ---------- */
+footer{border-top:1px solid var(--line);padding:52px 0 32px;margin-top:20px}
+.foot-grid{display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr;gap:30px}
+@media (max-width:820px){.foot-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.foot-grid{grid-template-columns:1fr}}
+.foot-brand p{color:var(--muted);font-size:.85rem;margin-top:12px;max-width:300px}
+footer h4{font-size:.76rem;letter-spacing:.1em;color:#6E7A88;margin-bottom:12px;font-weight:600}
+footer li a{color:var(--muted);text-decoration:none;font-size:.87rem;line-height:2.05;transition:color .18s}
+footer li a:hover{color:var(--text)}
+.foot-bottom{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;
+  margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:.79rem;color:#6E7A88;
+}
+
+/* ---------- 动效/可访问性 ---------- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .card:hover{transform:none}
+}
+:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-9999px;top:0;z-index:100;background:var(--card);padding:10px 16px;border-radius:0 0 10px 0}
+.skip:focus{left:0}
+</style>
+<noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要内容</a>
+
+<!-- ==================== 导航 ==================== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0B0D0F" stroke-width="2.6" stroke-linecap="round"><path d="M6 8h12M6 13h8M6 18h11"/></svg>
+      </span>
+      鼎盛机械
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="主导航">
+      <a href="#models">设备</a>
+      <a href="#industries">行业</a>
+      <a href="#why">优势</a>
+      <a href="#coop">合作方式</a>
+      <a href="#cases">案例</a>
+      <a href="#contact">联系</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="nav-phone" href="tel:4000000000">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg>
+        400-000-0000
+      </a>
+      <a class="btn btn-primary" href="#contact">获取报价</a>
+      <button class="burger" id="burger" aria-label="打开菜单" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<!-- ==================== Hero ==================== -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span>2026 新款 · 切制线整线方案已开放预约试机</span>
+    <h1>让食品生产线<br><span class="grad">跑得更稳、更省</span></h1>
+    <p class="lead">从单机到整线，鼎盛为食品工厂提供切制、搅拌腌制、成型、包装、杀菌与清洗设备。按你的产能和厂房条件定制，交付即可投产。</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-lg" href="#contact">免费获取选型方案</a>
+      <a class="btn btn-ghost btn-lg" href="#models">查看设备清单</a>
+    </div>
+    <p class="trust">服务 3,000+ 食品工厂 · CE / ISO 9001 认证 · <span style="white-space:nowrap">48 小时到达现场</span></p>
+
+    <div class="mockup reveal" aria-hidden="true">
+      <div class="mockup-bar">
+        <i></i><i></i><i></i>
+        <span class="mockup-url">mes.dingsheng-mc.com/line-01</span>
+      </div>
+      <div class="mockup-body">
+        <aside class="mock-side">
+          <div class="s-title">产线</div>
+          <div class="s-item on"><b></b>切制线 01</div>
+          <div class="s-item"><b></b>腌制线 02</div>
+          <div class="s-item"><b></b>成型线 03</div>
+          <div class="s-item"><b></b>包装线 04</div>
+          <div class="s-item"><b></b>杀菌线 05</div>
+          <div class="s-title" style="margin-top:22px">设备</div>
+          <div class="s-item"><b></b>FC-200 切丁机</div>
+          <div class="s-item"><b></b>MX-500 真空搅拌</div>
+        </aside>
+        <div class="mock-main">
+          <div class="m-head">
+            <span class="m-title">产线运行总览</span>
+            <span class="m-pill">运行正常</span>
+          </div>
+          <div class="mock-grid">
+            <div class="mock-card"><div class="k">今日产量</div><div class="v">12.4 <small>吨</small></div></div>
+            <div class="mock-card"><div class="k">设备效率 OEE</div><div class="v">86.2%</div></div>
+            <div class="mock-card"><div class="k">良品率</div><div class="v">99.1%</div></div>
+          </div>
+          <div class="mock-lines">
+            <div class="mock-line hl"></div>
+            <div class="mock-line"></div>
+            <div class="mock-line"></div>
+            <div class="mock-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 数据条 ==================== -->
+<section style="padding:56px 0 0">
+  <div class="wrap">
+    <div class="stats reveal">
+      <div class="stat"><b>20 年</b><span>整机制造经验</span></div>
+      <div class="stat"><b>3,000+</b><span>合作食品工厂</span></div>
+      <div class="stat"><b>120+</b><span>在售标准型号</span></div>
+      <div class="stat"><b>48h</b><span>全国到场响应</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 设备 ==================== -->
+<section class="section" id="models">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>设备</span>
+      <h2 style="margin-top:16px">六条产线，覆盖从原料到成品</h2>
+      <p>标准型号可直接下单，也能按你的产品形态和产能改刀组、改容积、改节拍。</p>
+    </div>
+
+    <div class="feature-grid">
+      <article class="card reveal">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg></div>
+        <span class="model-tag">FC-200</span>
+        <h3>三维切丁机</h3>
+        <p>一机完成切丁、切片、切丝，更换刀组 3 分钟，切口平整少碎料。</p>
+        <div class="specs"><span>产能 2 t/h</span><span>切丁 3–25mm</span><span>304 不锈钢</span></div>
+      </article>
+
+      <article class="card reveal">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6M12 15v6M4.5 7.5l4 4M15.5 12.5l4 4M7.5 4.5l4 4M12.5 15.5l4 4"/></svg></div>
+        <span class="model-tag">MX-500</span>
+        <h3>真空搅拌腌制机</h3>
+        <p>双轴真空搅拌，腌渍时间缩短约 40%，出料均匀、不破坏原料组织。</p>
+        <div class="specs"><span>容积 500L</span><span>真空 -0.09MPa</span><span>变频调速</span></div>
+      </article>
+
+      <article class="card reveal">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.6"/></svg></div>
+        <span class="model-tag">FM-300</span>
+        <h3>成型机</h3>
+        <p>肉饼、丸子、鸡块一机成型，模具快换，单重误差控制在 ±2% 以内。</p>
+        <div class="specs"><span>产能 1.2 t/h</span><span>单重 15–200g</span><span>30 分钟换模</span></div>
+      </article>
+
+      <article class="card reveal">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M3 12h18"/></svg></div>
+        <span class="model-tag">PK-8</span>
+        <h3>真空 / 气调包装机</h3>
+        <p>连续式真空与气调包装，封口平整无褶皱，适配多种袋型与托盘。</p>
+        <div class="specs"><span>60 包/分钟</span><span>双室可选</span><span>气调混配</span></div>
+      </article>
+
+      <article class="card reveal">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 3.5 5 6.2 5 9a5 5 0 01-10 0c0-2.8 2-5.5 5-9z"/></svg></div>
+        <span class="model-tag">ST-1200</span>
+        <h3>杀菌釜</h3>
+        <p>PLC 分段控温，热分布均匀，满足商业无菌要求，工艺参数可留痕追溯。</p>
+        <div class="specs"><span>1.2 m³</span><span>控温 ±0.5℃</span><span>多段工艺</span></div>
+      </article>
+
+      <article class="card reveal">
+        <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v3H9z"/><path d="M12 6v4"/><path d="M6 14l-1.2 4M12 13v5M18 14l1.2 4"/></svg></div>
+        <span class="model-tag">CIP-3</span>
+        <h3>就地清洗系统</h3>
+        <p>与产线联动，酸洗碱洗自动切换，缩短停机清洗时间，清洗记录可导出。</p>
+        <div class="specs"><span>3 路回路</span><span>自动配液</span><span>记录可追溯</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 行业 ==================== -->
+<section class="section" id="industries" style="background:linear-gradient(180deg,transparent,rgba(255,255,255,.02),transparent)">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>行业</span>
+      <h2 style="margin-top:16px">按行业工艺配线</h2>
+      <p>不同品类的物料特性差别很大，我们按你所在行业已有的工艺路线来配设备，不用你从头试错。</p>
+    </div>
+    <div class="chips reveal">
+      <span class="chip">预制菜</span><span class="chip">肉制品</span><span class="chip">烘焙</span>
+      <span class="chip">酱料调味</span><span class="chip">乳制品</span><span class="chip">果蔬加工</span>
+      <span class="chip">水产加工</span><span class="chip">中央厨房</span><span class="chip">休闲食品</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 优势 ==================== -->
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>为什么是鼎盛</span>
+      <h2 style="margin-top:16px">买设备，最后买的是产能</h2>
+      <p>我们卖的不是一台机器，是这套产能能不能稳定跑三年、五年。</p>
+    </div>
+    <div class="why-grid">
+      <div class="why reveal"><h3>整线交钥匙</h3><p>从工艺布局、设备成套到水电气接口一次给全，少一个总包就少一层扯皮。</p></div>
+      <div class="why reveal"><h3>非标定制</h3><p>厂房尺寸、产能、包装规格都能改，需求清楚的话 48 小时内出方案。</p></div>
+      <div class="why reveal"><h3>食品级标准</h3><p>接触物料部分 304 / 316L 不锈钢，焊缝抛光，能配合第三方验厂。</p></div>
+      <div class="why reveal"><h3>先算账再选型</h3><p>按年产能反推配置，平均帮客户减少 15%–30% 的综合使用成本。</p></div>
+      <div class="why reveal"><h3>交期可控</h3><p>标准机 20 天、定制线 45–60 天，生产进度每周同步给你。</p></div>
+      <div class="why reveal"><h3>售后有备件</h3><p>全国 12 个服务点，常用易损件 48 小时发到厂，不停线等件。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 流程 ==================== -->
+<section class="section" id="process" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>从沟通到投产，六步走完</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><em>1</em><h3>需求诊断</h3><p>了解产品形态、日产能、厂房尺寸和现有工艺，现场或视频都可。</p></div>
+      <div class="step reveal"><em>2</em><h3>方案与报价</h3><p>给出设备清单、布局草图、能耗估算和分项报价，不含糊。</p></div>
+      <div class="step reveal"><em>3</em><h3>定制制造</h3><p>签订合同后进入排产，关键节点拍照或视频给你确认。</p></div>
+      <div class="step reveal"><em>4</em><h3>出厂验收</h3><p>用你的物料试机，达到约定产能和指标后才安排发货。</p></div>
+      <div class="step reveal"><em>5</em><h3>安装调试</h3><p>工程师上门安装、联动调试，直到整线稳定出合格品。</p></div>
+      <div class="step reveal"><em>6</em><h3>培训与维保</h3><p>操作与保养培训，交付维保手册，进入 12 个月质保。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 合作方式 ==================== -->
+<section class="section" id="coop" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>合作方式</span>
+      <h2 style="margin-top:16px">三种合作，按你的阶段选</h2>
+      <p>不确定选哪种？把产能和厂房条件发给我们，48 小时内给建议。</p>
+    </div>
+    <div class="plans">
+      <div class="plan reveal">
+        <h3>单机采购</h3>
+        <p class="desc">已有产线，只需要替换或补充一台设备</p>
+        <p class="meta">标准机 20 天交付 · 含安装调试</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>选型比对与能耗测算</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>与现有产线的接口适配</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>12 个月质保</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact">询价</a>
+      </div>
+
+      <div class="plan featured reveal">
+        <span class="badge">多数客户选择</span>
+        <h3>整线交钥匙</h3>
+        <p class="desc">新建工厂或整线改造，从布局到投产</p>
+        <p class="meta">定制线 45–60 天 · 含安装培训</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>工艺设计与产线布局</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>设备成套与非标件定制</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>上门安装调试与操作培训</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>试产陪跑与工艺优化</li>
+        </ul>
+        <a class="btn btn-primary" href="#contact">预约方案沟通</a>
+      </div>
+
+      <div class="plan reveal">
+        <h3>非标定制</h3>
+        <p class="desc">特殊工艺、特殊规格，或现有设备总差一口气</p>
+        <p class="meta">按需求排期 · 支持样机验证</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>需求拆解与技术可行性评估</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>样机试制与小批量验证</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>联合调试至达标</li>
+        </ul>
+        <a class="btn btn-ghost" href="#contact">说说你的需求</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 案例 ==================== -->
+<section class="section" id="cases" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>客户案例</span>
+      <h2 style="margin-top:16px">改造前后，看得见的变化</h2>
+      <p>以下数据来自客户验收报告，人物与厂名做了匿名处理。</p>
+    </div>
+    <div class="cases">
+      <div class="case reveal">
+        <span class="tag">预制菜 · 华东</span>
+        <h3>切配 + 腌制 + 包装整线</h3>
+        <p>原产线靠人工分切与称重，旺季经常断料。改整线后节拍稳定，夜间也能无人值守运行。</p>
+        <div class="case-metrics">
+          <div><b>2.4×</b><span>日产能</span></div>
+          <div><b>-10 人</b><span>用工</span></div>
+        </div>
+      </div>
+      <div class="case reveal">
+        <span class="tag">肉制品 · 西南</span>
+        <h3>成型 + 杀菌线改造</h3>
+        <p>单重波动大导致终端退货，改造后成型精度提升，杀菌工艺参数固化可追溯。</p>
+        <div class="case-metrics">
+          <div><b>±2%</b><span>单重误差</span></div>
+          <div><b>-78%</b><span>退货率</span></div>
+        </div>
+      </div>
+      <div class="case reveal">
+        <span class="tag">连锁餐饮 · 中央厨房</span>
+        <h3>集中切配线</h3>
+        <p>三家门店的后厨切配合并到中央厨房，统一标准、统一配送，出品一致性明显提升。</p>
+        <div class="case-metrics">
+          <div><b>76 万</b><span>年省人工</span></div>
+          <div><b>3→1</b><span>切配点合并</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FAQ ==================== -->
+<section class="section" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>采购常问</h2>
+    </div>
+    <div class="faq reveal">
+      <details>
+        <summary>你们是厂家还是贸易商？</summary>
+        <p>我们是自有工厂的整机制造商，切制、搅拌、成型三条线在厂内自制，包装与杀菌为长期合作产线成套。欢迎随时来厂看设备和在制订单。</p>
+      </details>
+      <details>
+        <summary>交期多久？能加急吗？</summary>
+        <p>标准机 20 天左右，定制线 45–60 天。旺季排产紧张时，标准机可以走加急通道，具体以合同签订时的排产确认为准。</p>
+      </details>
+      <details>
+        <summary>能带物料来试机吗？</summary>
+        <p>可以。建议带上你真实的原料和成品规格，我们在厂内用对应机型试机，达到约定产能和指标后再谈合同。</p>
+      </details>
+      <details>
+        <summary>设备能通过验厂和体系审核吗？</summary>
+        <p>接触物料部分为 304 或 316L 不锈钢，焊缝抛光处理，随机提供材质证明、电气图纸和操作维保文件，可配合第三方验厂与体系审核。</p>
+      </details>
+      <details>
+        <summary>售后怎么保障？备件贵不贵？</summary>
+        <p>整机质保 12 个月，全国 12 个服务点，48 小时内到场。常用易损件常备库存，价格在合同附件里一次列明，后续不涨价。</p>
+      </details>
+      <details>
+        <summary>预算有限，能先小批量上吗？</summary>
+        <p>可以。很多客户先上一条关键工序的单机，跑顺之后再补齐前后段。我们可以按你的预算给分阶段方案。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 询价 ==================== -->
+<section class="section" id="contact" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="dot"></span>联系我们</span>
+      <h2 style="margin-top:16px">把你的产能需求发过来</h2>
+      <p>填写下方信息，我们会在 1 个工作日内联系你，并给出初步选型建议。</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="quote-card reveal">
+        <h3>获取选型方案与报价</h3>
+        <p>信息越具体，方案越准。带 * 为必填。</p>
+        <form id="quoteForm" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="f-name">称呼 <span class="req">*</span></label>
+              <input id="f-name" name="name" type="text" placeholder="王先生" required>
+            </div>
+            <div class="field">
+              <label for="f-company">公司名称</label>
+              <input id="f-company" name="company" type="text" placeholder="XX 食品有限公司">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="f-phone">联系电话 <span class="req">*</span></label>
+              <input id="f-phone" name="phone" type="tel" placeholder="138 0000 0000" required>
+            </div>
+            <div class="field">
+              <label for="f-type">意向设备</label>
+              <select id="f-type" name="type">
+                <option value="">请选择</option>
+                <option>切制设备</option>
+                <option>搅拌腌制设备</option>
+                <option>成型设备</option>
+                <option>包装设备</option>
+                <option>杀菌设备</option>
+                <option>整线方案</option>
+                <option>非标定制</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-msg">需求描述</label>
+            <textarea id="f-msg" name="message" placeholder="例如：日产 5 吨预制菜，需要切丁+腌制+真空包装，厂房 120㎡，预算 60 万左右。"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" style="width:100%">提交需求</button>
+          <p class="form-note">提交即表示同意我们通过电话或微信与你联系，信息仅用于本次询价。</p>
+          <div class="form-ok" id="formOk">已收到你的需求，我们会在 1 个工作日内联系你。急件可直接拨打 400-000-0000。</div>
+        </form>
+      </div>
+
+      <div class="contact-info reveal">
+        <h3>直接联系</h3>
+        <div class="contact-item">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg></span>
+          <div><b>销售热线</b><a href="tel:4000000000">400-000-0000</a></div>
+        </div>
+        <div class="contact-item">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+          <div><b>邮箱</b><a href="mailto:sales@example.com">sales@example.com</a></div>
+        </div>
+        <div class="contact-item">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+          <div><b>工厂地址</b><span>江苏省苏州市吴中区 XX 路 88 号</span></div>
+        </div>
+        <div class="contact-item">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+          <div><b>工作时间</b><span>周一至周六 8:30–18:00</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ==================== 页脚 ==================== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top">
+          <span class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0B0D0F" stroke-width="2.6" stroke-linecap="round"><path d="M6 8h12M6 13h8M6 18h11"/></svg>
+          </span>
+          鼎盛机械
+        </a>
+        <p>食品加工设备制造商，为食品工厂提供单机与整线交钥匙方案。</p>
+      </div>
+      <div>
+        <h4>设备</h4>
+        <ul>
+          <li><a href="#models">切制设备</a></li>
+          <li><a href="#models">搅拌腌制</a></li>
+          <li><a href="#models">成型设备</a></li>
+          <li><a href="#models">包装设备</a></li>
+          <li><a href="#models">杀菌与清洗</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>服务</h4>
+        <ul>
+          <li><a href="#coop">合作方式</a></li>
+          <li><a href="#process">服务流程</a></li>
+          <li><a href="#faq">采购常问</a></li>
+          <li><a href="#contact">预约试机</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>公司</h4>
+        <ul>
+          <li><a href="#why">关于我们</a></li>
+          <li><a href="#cases">客户案例</a></li>
+          <li><a href="#contact">联系我们</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2026</span> 鼎盛机械制造有限公司 · 苏 ICP 备 00000000 号</span>
+      <span>ISO 9001 · CE 认证 · 20 年整机制造</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* 导航：滚动加边框 + 移动端菜单 */
+  var nav = document.getElementById('nav');
+  var burger = document.getElementById('burger');
+  var links = document.getElementById('navLinks');
+
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  burger.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? '关闭菜单' : '打开菜单');
+  });
+
+  links.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A' && nav.classList.contains('open')) {
+      nav.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      burger.setAttribute('aria-label', '打开菜单');
+    }
+  });
+
+  /* 滚动淡入 */
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* 询价表单：前端演示
+     —— 接真实后端时，把下面 fetch 换成你的接口即可：
+     fetch('/api/quote', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data) })
+     也可以直接用表单服务（Formspree / 腾讯问卷 / 飞书多维表格）接收。 */
+  var form = document.getElementById('quoteForm');
+  var ok = document.getElementById('formOk');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = form.name.value.trim();
+    var phone = form.phone.value.trim();
+    if (!name || !phone) {
+      (name ? form.phone : form.name).focus();
+      alert('请填写称呼和联系电话');
+      return;
+    }
+    if (!/^[\d\s\-+()]{6,}$/.test(phone)) {
+      form.phone.focus();
+      alert('请填写有效的联系电话');
+      return;
+    }
+    ok.classList.add('show');
+    form.reset();
+    ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  document.getElementById('year').textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>
